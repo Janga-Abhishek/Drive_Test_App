@@ -1,0 +1,173 @@
+<!-- Include necessary head content -->
+<%- include('layout/head'); -%>
+<!-- Include navigation -->
+<style>
+  /* styles.css */
+  .appointment-details {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .name-details {
+    display: flex;
+    gap: 20%;
+  }
+
+  .car-details {
+    display: flex;
+    flex-direction: row;
+    gap: 20%;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+
+  .pass-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Style the submit button */
+  .submit-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  /* Hover effect for submit button */
+  .submit-button:hover {
+    background-color: #0056b3;
+  }
+
+  /* Basic styling for the filter form */
+  .filter-form {
+    margin-bottom: 20px;
+  }
+
+  /* Style for the appointments list */
+  .appointment-list {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+    font-family: Arial, sans-serif;
+  }
+
+  /* Style for individual appointments */
+  .appointment {
+    margin-bottom: 15px;
+    padding: 15px;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  }
+
+  /* Style for the comment form within appointments */
+  .comment-form {
+    margin-top: 10px;
+  }
+
+  /* Define other necessary styles for your elements */
+  body {
+    background-color: #f3f3f3;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  h1 {
+    color: #333;
+  }
+
+  /* Adjust other elements as needed */
+</style>
+
+<%- include('layout/nav'); -%>
+<header
+  class="masthead"
+  style="background-image: url('assets/img/g2_page.webp')"
+>
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="page-heading">
+          <h1>Drive Test Decision</h1>
+          <span class="subheading"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Header and other necessary HTML structure -->
+<div><br /><br /><br /><br /></div>
+<div class="container">
+  <h1>Examiner Page</h1>
+
+  <!-- Filter Options -->
+  <form action="/examiner" method="GET" class="filter-form">
+    <!-- New Filter for examType -->
+    <label for="examType">Filter by Exam Type:</label>
+    <select name="examType" id="examType">
+      <option value="G2">G2</option>
+      <option value="G">G</option>
+      <!-- Add more options if needed -->
+    </select>
+    <button type="submit">Filter</button>
+  </form>
+
+  <!-- Display Appointments or Drivers based on Filter -->
+  <div class="appointment-list">
+    <h2>Appointments/Drivers</h2>
+    <% if (appointments && appointments.length > 0 && appointments[0].examType)
+    { %>
+    <ul class="appointments">
+      <% appointments.forEach(appointment => { %>
+      <li class="appointment">
+        <div class="appointment-details">
+          <div class="name-details">
+            <p>First Name: <%= appointment.firstName %></p>
+            <p>Last Name: <%= appointment.lastName %></p>
+          </div>
+          <div class="car-details">
+            <p>Car Make: <%= appointment.car_details.make %></p>
+            <p>Car Model: <%= appointment.car_details.model %></p>
+            <p>Car Plate No: <%= appointment.car_details.platno %></p>
+          </div>
+          <p>Test Type: <%= appointment.examType %></p>
+          <form
+            action="/examiner/addComment"
+            method="POST"
+            class="comment-form"
+          >
+            <input type="hidden" name="userId" value="<%= appointment._id %>" />
+            <textarea
+              name="comment"
+              placeholder="Add comment..."
+              class="full-width"
+            ></textarea>
+            <div class="pass-checkbox">
+              <label for="pass">Pass</label>
+              <input type="checkbox" id="pass" name="isPassed" value="true" />
+            </div>
+            <button type="submit" class="submit-button">Submit</button>
+          </form>
+        </div>
+      </li>
+      <% }); %>
+    </ul>
+    <% } else { %>
+    <p>No appointments or drivers found or filter not applied.</p>
+    <% } %>
+  </div>
+</div>
+
+<!-- Footer and other HTML -->
+<%- include('layout/footer'); -%> <%- include('layout/script'); -%>
+<script src="js/scripts.js"></script>

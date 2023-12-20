@@ -1,0 +1,84 @@
+<%- include('layout/head'); -%>
+<div class="nav"><%- include('layout/nav'); -%></div>
+<div><br /><br /><br /></div>
+<div class="container">
+  <h2>Candidates who Passed G2 or G</h2>
+  <div class="candidates-list">
+    <% if (candidates && candidates.length > 0) { %>
+    <div class="cards-container">
+      <% candidates.forEach(candidate => { %>
+      <div class="candidate-card">
+        <p class="candidate-name">User Name: <%= candidate.username %></p>
+
+        <p class="candidate-details">First Name: <%= candidate.firstName %></p>
+        <p class="candidate-details">Last Name: <%= candidate.lastName %></p>
+        <p class="candidate-details">
+          License No: <%= candidate.originalLicenseNo %>
+        </p>
+        <p class="candidate-details">Feedback: <%= candidate.comment %></p>
+        <p class="candidate-status">Status: <%= candidate.examStatus %></p>
+        <!-- Display other relevant details -->
+      </div>
+      <% }); %>
+    </div>
+    <% } else { %>
+    <p>No candidates found with Passed G2 or Passed G status.</p>
+    <% } %>
+  </div>
+  <%- include('layout/footer'); -%> <%- include('layout/script'); -%>
+  <script src="js/scripts.js"></script>
+  <style>
+    /* styles.css */
+
+    /* Apply a background to the entire page */
+    body {
+      background-color: #f3f3f3;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Style for the candidate list */
+    .candidates-list {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Style for the card container */
+    .cards-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    /* Style for individual candidate cards */
+    .candidate-card {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 20px;
+      width: 300px;
+      background-color: #fff;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Style for candidate name */
+    .candidate-name {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    /* Style for candidate status */
+    .candidate-status {
+      color: green;
+      margin-top: 5px;
+    }
+    .candidate-details {
+      color: grey;
+    }
+    .nav {
+      background-color: black;
+    }
+    /* Adjust other styles as needed */
+  </style>
+</div>

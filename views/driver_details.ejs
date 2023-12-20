@@ -1,0 +1,15 @@
+<!-- examiner.ejs -->
+<!-- Display limited driver information -->
+<h1>Driver Information</h1>
+<% if (user) { %>
+<p>Name: <%= user.firstName %> <%= user.lastName %></p>
+<p>Car Details:</p>
+<ul>
+  <li>Make: <%= user.car_details.make %></li>
+  <li>Model: <%= user.car_details.model %></li>
+  <li>Year: <%= user.car_details.year %></li>
+  <li>Plate Number: <%= user.car_details.platno %></li>
+</ul>
+<% } else { %>
+<p>No driver selected or found</p>
+<% } %>

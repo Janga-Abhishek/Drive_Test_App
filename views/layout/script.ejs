@@ -1,0 +1,40 @@
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Core theme JS-->
+<script src="js/scripts.js"></script>
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<!-- * *                               SB Forms JS                               * *-->
+<!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+<script>
+  console.log("Script loaded!");
+  document.addEventListener("DOMContentLoaded", () => {
+    const dateInput = document.getElementById("date");
+    const timeSelect = document.getElementById("time");
+
+    dateInput.addEventListener("change", () => {
+      const selectedDate = dateInput.value;
+      fetchAvailableAppointments(selectedDate);
+    });
+
+    function fetchAvailableAppointments(date) {
+      fetch(`/api/available-appointments?date=${date}`)
+        .then((response) => response.json())
+        .then((availableAppointments) => {
+          // Clear existing options
+          timeSelect.innerHTML = "";
+
+          // Add options for available appointments to the dropdown
+          availableAppointments.forEach((appointment) => {
+            const option = document.createElement("option");
+            option.value = appointment.time;
+            option.innerText = appointment.time;
+            timeSelect.appendChild(option);
+          });
+        })
+        .catch((error) =>
+          console.error("Error fetching available appointments:", error)
+        );
+    }
+  });
+</script>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('layout/head'); -%>
+
+  <body>
+    <!-- Navigation-->
+    <%- include('layout/nav'); -%>
+
+    <!-- Page Header-->
+    <header
+      class="masthead"
+      style="background-image: url('assets/img/g_test.png')"
+    >
+      <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="page-heading">
+              <h1>G Drive Test</h1>
+              <span class="subheading">Book your G test with us today..!</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Post Content-->
+    <% if (status==="Passed G2" && user.examType!="Failed") { %>
+
+    <article class="margin_form">
+      <div class="container">
+        <!-- <form action="/process-license" method="post">
+          <div class="form-group">
+            <label for="licenseNumber">License Number:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="licenseNumber"
+              name="licenseNumber"
+              placeholder="Enter License Number"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary margin_button">
+            Get Record
+          </button>
+        </form> -->
+        <div class="booking_slot">
+          <p class="message">
+            <%= (typeof message !== "undefined" ? message : "") %>
+          </p>
+          <h1>Select an Appointment Slot</h1>
+          <p>User can select only 1 slot</p>
+          <% if (appointments.length > 0 ) { %>
+          <form action="/g_page" method="POST" <% if (bookedAppointments.length>
+            0) { %> disabled <% } %>>
+            <label for="appointments">Available Appointments:</label>
+            <select
+              name="selectedAppointment"
+              id="appointments"
+              <%
+              if
+              (bookedAppointments.length
+            <
+              0 || appointments.length === 0 && user.examType === "G") { %> disabled
+              style="background-color: lightgray;" <% } %>> <%
+              appointments.sort((a, b) => { const dateComparison = new
+              Date(a.date) - new Date(b.date); if (dateComparison !== 0) {
+              return dateComparison; } return a.time.localeCompare(b.time);
+              }).forEach(appointment => { %>
+              <option value="<%= appointment._id %>">
+                Date: <%= appointment.date.toISOString().split('T')[0] %>, Time:
+                <%= appointment.time %>
+              </option>
+              <% }); %>
+            </select>
+            <button type="submit" <% if (bookedAppointments.length<
+              0 || appointments.length === 0 && user.examType === "G") { %> disabled
+              style="background-color: lightgray;" <% } %>>Select Appointment
+            </button>
+            <% if (bookedAppointments.length > 0 ) { %>
+            <p>You already have an appointment.</p>
+            <% } %>
+          </form>
+          <% } else { %>
+          <p>No more Appointments Available</p>
+          <% } %>
+
+          <h1>Booked Appointments</h1>
+
+          <% if (bookedAppointments.length > 0) { %>
+          <ul>
+            <% bookedAppointments.forEach(appointment => { %>
+            <li>
+              Date: <%= appointment.date.toISOString().split('T')[0] %>, Time:
+              <%= appointment.time %>
+            </li>
+            <% }); %>
+          </ul>
+          <% } else { %>
+          <p>No booked appointments found.</p>
+          <% } %>
+          <!-- Button to view booked appointments -->
+          <a href="/user_appointments">
+            <button>View Booked Appointments</button>
+          </a>
+        </div>
+        <h2>User Information</h2>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Field</th>
+              <th>Value</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (user) { %>
+            <tr>
+              <td>First Name</td>
+              <td><%= user.firstName %></td>
+            </tr>
+            <tr>
+              <td>Last Name</td>
+              <td><%= user.lastName %></td>
+            </tr>
+            <tr>
+              <td>License Number</td>
+              <td><%= user.originalLicenseNo %></td>
+            </tr>
+            <tr>
+              <td>Age</td>
+              <td><%= user.age %></td>
+            </tr>
+            <% } else { %>
+            <tr>
+              <td colspan="2"><%= message %></td>
+            </tr>
+            <tr>
+              <td colspan="2"><a href="/g2_page">Go Back to G2_page</a></td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+        <h3>Car Information</h3>
+        <form action="/update-car-info" method="post">
+          <input
+            type="hidden"
+            name="licenseNumber"
+            value="<%= user ? user.licenseNo : '' %>"
+          />
+          <div class="form-group">
+            <label for="make">Make</label>
+            <input
+              type="text"
+              class="form-control"
+              id="make"
+              name="make"
+              value="<%= user && user.car_details ? user.car_details.make : '' %>"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="model">Model</label>
+            <input
+              type="text"
+              class="form-control"
+              id="model"
+              name="model"
+              value="<%= user && user.car_details ? user.car_details.model : '' %>"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="year">Year</label>
+            <input
+              type="text"
+              class="form-control"
+              id="year"
+              name="year"
+              value="<%= user && user.car_details ? user.car_details.year : '' %>"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="platno">Plate Number</label>
+            <input
+              type="text"
+              class="form-control"
+              id="platno"
+              name="platno"
+              value="<%= user && user.car_details && user.car_details.platno ? user.car_details.platno : '' %>"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary margin_button">
+            Update Car Info
+          </button>
+        </form>
+      </div>
+    </article>
+    <% } else if (status === "Passed G") { %>
+      <p class="congratulations"> Congratulations on your G License</p>
+      <!-- Render content for users who passed G -->
+    <% }else if(user.examType==="Failed"){%><p class="failed"> Bad Luck...! You Have Failed the test. <br> please try again after 15 days</p><%} else {%>
+      <p class="error">First, take your G2</p>
+      <!-- Render content for users who haven't passed G2 or G -->
+    <% } %>
+    <!-- Footer-->
+    <%- include('layout/footer'); -%>
+
+    <!-- Bootstrap core JS-->
+    <%- include('layout/script'); -%>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
+
+<style>
+ .congratulations {
+  font-size: 24px;
+  font-weight: bold;
+  color: #008000; /* Green color for the message */
+  text-align: center;
+  animation: pulse 1s infinite; /* Using the 'pulse' animation */
+}
+.failed {
+  font-size: 24px;
+  font-weight: bold;
+  color: red; /* Green color for the message */
+  text-align: center;
+  animation: pulse 1s infinite; /* Using the 'pulse' animation */
+}
+.error{
+  font-size: 24px;
+  font-weight: bold;
+  color: red; /* Green color for the message */
+  text-align: center;
+  animation: pulse 1s infinite; /
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+  .appointment-success {
+background-color: green; 
+}
+.appointment-error {
+background-color: red; 
+}
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    margin: 0;
+    padding: 0;
+  }
+
+  .booking_slot {
+    max-width: 500px;
+    margin: 20px auto;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+  }
+
+  .booking_slot h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .booking_slot form {
+    margin-bottom: 20px;
+  }
+
+  .booking_slot label {
+    display: block;
+    margin-bottom: 10px;
+    color: #555;
+    font-weight: bold;
+  }
+
+  .booking_slot select {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  .booking_slot button {
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-size: 16px;
+  }
+
+  .booking_slot button:hover {
+    background-color: #0056b3;
+  }
+
+  .booking_slot p {
+    font-size: 18px;
+    color: #888;
+  }
+</style>
+</body>
+</html>

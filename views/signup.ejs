@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('layout/head'); -%>
+  <body>
+    <!-- Navigation-->
+    <%- include('layout/nav'); -%>
+    <!-- Page Header-->
+    <header
+      class="masthead"
+      style="background-image: url('assets/img/signup.jpeg')"
+    >
+      <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div
+              class="page-heading"
+              style="
+                background-color: white;
+                color: black;
+                padding: 2%;
+                border-radius: 10px;
+                border: 2px solid black;
+              "
+            >
+              <p class="message">
+                <%= (typeof message != "undefined" ? message : "") %>
+              </p>
+
+              <h1>Sign Up</h1>
+              <!-- Your HTML form for signup -->
+              <div class="form-container">
+                <form action="/signup" method="post">
+                  <label for="username">Username:</label>
+                  <input type="text" name="username" required /><br />
+
+                  <label for="password">Password:</label>
+                  <input type="password" name="password" required /><br />
+
+                  <label for="confirmPassword">Confirm Password:</label>
+                  <input
+                    type="password"
+                    name="confirmPassword"
+                    required
+                  /><br />
+
+                  <label for="userType">User Type:</label>
+                  <select name="userType" required>
+                    <option value="Driver">Driver</option>
+                    <option value="Examiner">Examiner</option>
+                    <option value="Admin">Admin</option></select
+                  ><br />
+
+                  <button type="submit">Sign Up</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Main Content-->
+    <!-- Footer-->
+    <%- include('layout/footer'); -%>
+    <!-- Bootstrap core JS-->
+    <%- include('layout/script'); -%>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+  </body>
+</html>

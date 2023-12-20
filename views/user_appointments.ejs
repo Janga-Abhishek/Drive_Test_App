@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Include necessary head content -->
+    <% include('layout/head'); %>
+  </head>
+  <body>
+    <!-- Include navigation -->
+    <% include('layout/nav'); %>
+
+    <h1>Booked Appointments</h1>
+
+    <% if (bookedAppointments.length > 0) { %>
+    <ul>
+      <% bookedAppointments.forEach(appointment => { %>
+      <li>Date: <%= appointment.date %>, Time: <%= appointment.time %></li>
+      <% }); %>
+    </ul>
+    <% } else { %>
+    <p>No booked appointments found.</p>
+    <% } %>
+
+    <!-- Include necessary footer and scripts -->
+    <% include('layout/footer'); %>
+    <script src="/js/scripts.js"></script>
+  </body>
+</html>

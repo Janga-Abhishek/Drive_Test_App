@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Include necessary head content -->
+    <% include('layout/head'); %>
+  </head>
+  <body>
+    <!-- Include navigation -->
+    <% include('layout/nav'); %>
+
+    <h1>Select an Appointment Slot</h1>
+
+    <% if (appointments.length > 0) { %>
+    <form action="/book_appointment" method="POST">
+      <label for="appointments">Available Appointments:</label>
+      <select name="selectedAppointment" id="appointments">
+        <% appointments.forEach(appointment => { %>
+        <option value="<%= appointment._id %>">
+          Date: <%= appointment.date %>, Time: <%= appointment.time %>
+        </option>
+        <% }); %>
+      </select>
+
+      <button type="submit">Select Appointment</button>
+    </form>
+    <% } else { %>
+    <p>No available appointments.</p>
+    <% } %>
+
+    <!-- Button to view booked appointments -->
+    <a href="/user_appointments">
+      <button>View Booked Appointments</button>
+    </a>
+
+    <!-- Include necessary footer and scripts -->
+    <% include('layout/footer'); %>
+    <script src="/js/scripts.js"></script>
+  </body>
+</html>

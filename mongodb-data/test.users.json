@@ -1,0 +1,32 @@
+[{
+  "_id": {
+    "$oid": "6529b3cdb14170b8489f9be0"
+  },
+  "firstName": "Abhishek",
+  "lastName": "Janga",
+  "age": 25,
+  "licenseNo": "A1234567",
+  "car_details": {
+    "make": "ford",
+    "model": "escape",
+    "year": 2022,
+    "platno": "DAAA 235"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6529dc073824daaf224fead1"
+  },
+  "firstName": "Kavya",
+  "lastName": "balne",
+  "age": 23,
+  "licenseNo": "K1234567",
+  "car_details": {
+    "make": "benz",
+    "model": "AMG GLC coupe",
+    "year": 2024,
+    "platno": "KABHI"
+  },
+  "__v": 0
+}]

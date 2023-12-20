@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('layout/head'); -%>
+  <body>
+    <!-- Navigation-->
+    <%- include('layout/nav'); -%>
+    <!-- Page Header-->
+    <header class="masthead" style="background-image: url('assets/img/login-bg.jpeg');"
+    ">
+      <div class="container position-relative px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+          <div class="col-md-10 col-lg-8 col-xl-7">
+            <div class="page-heading" style="background-color: white; color: black; padding:2%;border-radius: 10px; border: 2px solid black; ">
+              <p class="message">
+                <%= (typeof message != "undefined" ? message : "") %>
+              </p>
+              <h1>Login</h1>
+              <!-- Your HTML form for login -->
+              <form action="/login" method="post">
+                <label for="username">Username:</label>
+                <input type="text" name="username" required style="border: 2px solid #3498db;"/><br />
+
+                <label for="password">Password:</label>
+                <input type="password" name="password" required style="border: 2px solid #3498db;"/><br />
+
+                <button type="submit">Login</button>
+              </form>
+
+              <!-- Sign Up Option -->
+              <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <!-- Main Content-->
+    <!-- Footer-->
+    <%- include('layout/footer'); -%>
+    <!-- Bootstrap core JS-->
+    <%- include('layout/script'); -%>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
+<style>
+  body {
+    background-color: #f8f9fa;
+    font-family: "Arial", sans-serif;
+    color: black;
+  }
+
+  .masthead {
+    background-color: #343a40;
+    color: #fff;
+    padding: 80px 0;
+    text-align: center;
+  }
+
+  .page-heading h1 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+
+  .message {
+    color: #fff;
+    background-color: skyblue;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  form label {
+    display: block;
+    margin-bottom: 5px;
+    color: black !important;
+  }
+
+  form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+  }
+
+  form button {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  form button:hover {
+    background-color: #0056b3;
+  }
+
+  p {
+    margin-top: 20px;
+    text-align: center;
+  }
+
+  a {
+    color: #007bff;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+</style>

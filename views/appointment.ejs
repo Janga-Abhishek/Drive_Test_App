@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Include necessary head content -->
+    <%- include('layout/head'); %>
+  </head>
+  <body>
+    <!-- Include navigation -->
+    <%- include('layout/nav'); %>
+
+    <!-- Appointment creation form -->
+    <div class="container">
+      <h1>Create Appointment Slots</h1>
+      <form action="/appointment" method="POST" class="appointment-form">
+
+        <p class="message <%= backgroundClass %>">
+          <%= (typeof message !== "undefined" ? message : "") %>
+        </p>
+        <!-- Input fields for appointment details -->
+        <label for="date">Date:</label>
+<input type="date" id="date" name="date" required min="<%= (new Date()).toISOString().split('T')[0] %>" />
+
+<label for="time">Time:</label>
+<input type="time" id="time" name="time" required list="timeslots" />
+
+<datalist id="timeslots">
+  <option value="09:00"></option>
+  <option value="09:30"></option>
+  <option value="10:00"></option>
+  <option value="10:30"></option>
+  <option value="11:00"></option>
+  <option value="11:30"></option>
+  <option value="12:00"></option>
+  <option value="12:30"></option>
+  <option value="13:00"></option>
+  <option value="13:30"></option>
+  <option value="14:00"></option>
+  <option value="14:30"></option>
+  <option value="15:00"></option>
+  <option value="15:30"></option>
+  <option value="16:00"></option>
+</datalist>
+ 
+        <!-- Submit button -->
+        <button
+          type="submit"
+          class="btn-create-appointment"
+          id="createAppointmentBtn"
+        >
+          Create Appointment Slots
+        </button>
+      </form>
+
+      <!-- Existing Appointment Slots -->
+      <h2>Existing Appointment Slots</h2>
+      <table class="appointment-slots" id="existingSlotsTable">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Status</th>
+              <th>Booked By</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if(existingSlots && existingSlots.length > 0) { %> <%
+            existingSlots.forEach(slot => { %>
+            <tr>
+              <td> <%= slot.date.toISOString().split('T')[0] %></td>
+              <td><%= slot.time %></td>
+              <td><%= slot.isTimeSlotAvailable ? 'Available' : 'Booked' %></td>
+              <td>
+                <% if (!slot.isTimeSlotAvailable && slot.bookedBy) { %> <%=
+                slot.bookedBy.username %> <% }
+                else { %> N/A <% } %>
+              </td>
+            </tr>
+            <% }); %> <% } else { %>
+            <tr>
+              <td colspan="4">No appointment slots available</td>
+            </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </table>
+    </div>
+
+    <%- include('layout/footer'); %>
+    
+    <%- include('layout/script'); -%>
+    
+  </body>
+</html>
+<style>
+
+
+
+.appointment-success {
+  background-color: green; /
+}
+
+.appointment-error {
+  background-color: red; 
+}
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: grey;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+  color: black; 
+}
+
+h1 {
+  margin-top: 10%;
+}
+
+.appointment-form {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #fff; 
+}
+
+input[type="date"] {
+  padding: 8px;
+  margin-bottom: 10px;
+  width: 200px;
+}
+
+.btn-create-appointment {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-create-appointment:hover {
+  background-color: #0056b3;
+}
+
+/* Styles for the appointment slots table */
+.appointment-slots {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  color: white; /* Set table text color */
+}
+
+.appointment-slots th,
+.appointment-slots td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.appointment-slots th {
+  background-color: #f2f2f2;
+  color: black; /* Set header text color */
+}
+
+
+
+
+/* Styles for the appointment form */
+.appointment-form {
+  margin-bottom: 20px;
+  background-color: #333; /* Form background color */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: white;
+}
+
+input[type="date"],
+input[type="time"],
+.btn-create-appointment {
+  padding: 10px;
+  margin-bottom: 15px;
+  width: calc(100% - 20px);
+  border: none;
+  border-radius: 5px;
+}
+
+input[type="date"],
+input[type="time"] {
+  background-color: #444; /* Input background color */
+  color: white;
+}
+
+input[type="date"]:focus,
+input[type="time"]:focus {
+  outline: none;
+  box-shadow: 0 0 5px #007bff; /* Focus effect */
+}
+
+.btn-create-appointment {
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-create-appointment:hover {
+  background-color: #0056b3; /* Hover effect */
+}
+
+</style>
